@@ -1,0 +1,43 @@
+:root {
+  --main-bg-color: #dbe2ff;
+  --main-color: #212121;
+  --blue-color: #5081ff;
+  --grey-color: #373b3f;
+  --border-color: #858894;
+  --currentPage-color: #212121;
+}
+
+.dark-theme {
+  &:root {
+    --main-color: #e4e4e4;
+    --currentPage-color: #fff;
+    --border-color: #212121;
+    --main-bg-color: #dfe1e4;
+  }
+  body {
+    background: url('@/assets/images/main-img/bg-dark.jpg') 0 0 / cover
+      no-repeat;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  max-height: 100vh;
+  overflow: auto;
+  background: var(--main-bg-color);
+  color: var(--main-color);
+  font-family: 'Mersad', sans-serif;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url('@/assets/images/main-img/bg-white.jpg') 0 0 / cover no-repeat;
+}
