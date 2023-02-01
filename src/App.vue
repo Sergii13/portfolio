@@ -7,7 +7,7 @@ import SidebarComponent from '@/components/layout/SidebarComponent.vue'
 
 <template>
   <div class="wrapper__row">
-    <SideBar />
+    <SidebarComponent />
     <div class="wrapper__content">
       <HeaderComponent> </HeaderComponent>
       <main class="page">
