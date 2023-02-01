@@ -66,7 +66,7 @@
 <script setup>
 import {useRoute} from 'vue-router'
 import ContactIcon from '@/assets/images/icons/iconContact.png'
-import SidebarIcon from '@/components/qwer/SidebarIcon.vue'
+import SidebarIcon from '@/components/iconsComponent/SidebarIcon.vue'
 import {
   pathContacts,
   pathFeedback,
