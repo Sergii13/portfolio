@@ -1,4 +1,180 @@
-:root {
+// За замовчуванням шрифт ==============================================================================================================================================================================================================================================================================
+@use 'sass:math';
+
+// ============================================================================================================================================================================================================================================================================================================================================================================================
+// ============================================================================================================================================================================================================================================================================================================================================================================================
+
+// Обнулення ============================================================================================================================================================================================== =============================================================================================== ===============================================================================================
+
+// Стилі тега BODY ============================================================================================================================================================================================================================================================================================================================================================================================
+[class*='-ibg'] {
+  position: relative;
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+  picture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+}
+body {
+  // Скролл заблоковано
+  .lock & {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+  // Сайт завантажений
+  .loaded & {
+  }
+}
+
+// Оболонка wrapper ============================================================================================================================================================================================================================================================================================================================================================================================================================================
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  padding: 0 30px;
+  @media (max-width: em(1600)) {
+    padding: rem(20) rem(15) 0;
+  }
+  @media (max-width: $tablet) {
+    padding: rem(10) 0 0;
+  }
+  &__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+}
+picture {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper__row {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 26px;
+  padding-top: 30px;
+  @media (max-width: em(1600)) {
+    padding-top: rem(0);
+  }
+}
+.page {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: rem(35);
+  @media (max-width: em(1600)) {
+    padding-top: rem(15);
+  }
+  @media (max-width: $tablet) {
+    padding: rem(25) rem(15) 0;
+    position: relative;
+    & > * {
+      position: relative;
+      z-index: 3;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 40px;
+      height: calc(100% + 40px);
+      width: calc(100% - 80px);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0) 106.24%
+      );
+      .dark-theme & {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03) 0%,
+          rgba(255, 255, 255, 0) 106.24%
+        );
+      }
+      mix-blend-mode: soft-light;
+      backdrop-filter: blur(12.5px);
+      border-radius: 30px 30px 0 0;
+    }
+  }
+}
+// Обмежуючий контейнер ======================================================================================================================================================================================================================
+
+/*
+(i) Стилі будуть застосовуватись до
+всіх класів, що містять *__container
+Наприклад header__container, main__container і т.п.
+Сніппет (HTML): cnt
+*/
+@if ($responsiveType==1) {
+  // Чуйна
+  [class*='__container'] {
+    @if ($maxWidthContainer>0) {
+      max-width: rem($containerWidth);
+      margin: 0 auto;
+    }
+    @if ($containerPadding>0) {
+      @if ($maxWidthContainer>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      } @else {
+        @include adaptiveValue(
+          'padding-left',
+          math.div($containerPadding, 2),
+          15
+        );
+        @include adaptiveValue(
+          'padding-right',
+          math.div($containerPadding, 2),
+          15
+        );
+      }
+    }
+  }
+} @else {
+  // Брейк-поїнтами
+  [class*='__container'] {
+    margin: 0 auto;
+    @if ($maxWidthContainer>0) {
+      max-width: rem($containerWidth);
+    } @else {
+      @if ($containerPadding>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+    @media (max-width: $pc) {
+      max-width: rem(970);
+    }
+    @media (max-width: $tablet) {
+      max-width: rem(750);
+    }
+    @media (max-width: $mobile) {
+      max-width: none;
+      @if ($containerPadding>0 and $maxWidthContainer>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+  }
+}
+
+html {
   --main-bg-color: #dbe2ff;
   --main-color: #212121;
   --blue-color: #5081ff;
@@ -7,19 +183,50 @@
   --currentPage-color: #212121;
 }
 
-.dark-theme {
-  &:root {
+html {
+  .dark-theme {
     --main-color: #e4e4e4;
     --currentPage-color: #fff;
     --border-color: #212121;
     --main-bg-color: #dfe1e4;
   }
-  body {
-    background: url('@/assets/images/main-img/bg-dark.jpg') 0 0 / cover
-      no-repeat;
+}
+.wrapper {
+  background: #dbe2ff;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url('@/assets/images/main-img/bg2.png') 0 0 / cover no-repeat;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url('@/assets/images/main-img/bg2.png') 0 0 / cover no-repeat;
   }
 }
-
+.wrapper__row {
+  position: relative;
+  z-index: 2;
+}
+body {
+  &.dark-theme {
+    .wrapper {
+      background: #141414;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
 *,
 *::before,
 *::after {
@@ -28,16 +235,14 @@
   position: relative;
   font-weight: normal;
 }
-
+a {
+  color: inherit;
+}
 body {
-  max-height: 100vh;
-  overflow: auto;
-  background: var(--main-bg-color);
+  // background: var(--main-bg-color);
   color: var(--main-color);
   font-family: 'Mersad', sans-serif;
   font-size: 16px;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url('@/assets/images/main-img/bg-white.jpg') 0 0 / cover no-repeat;
 }
