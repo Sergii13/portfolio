@@ -104,7 +104,10 @@ const {feedback} = toRefs(props)
     }
     img {
       width: 15px;
+      height: 15px;
       flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
     }
   }
   // .card-feedback__body
