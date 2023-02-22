@@ -239,11 +239,17 @@ onMounted(() => {})
 .v-enter-to {
   left: 0;
 }
+.v-enter-active {
+  animation: blur-in 0.5s ease-in-out forwards;
+}
 .v-leave-from {
   left: 0;
 }
 .v-leave-to {
   left: -100%;
+}
+.v-leave-active {
+  animation: blur-out 0.5s ease-in-out forwards;
 }
 .custom-select {
   @media (max-width: $tablet) {
@@ -458,9 +464,8 @@ onMounted(() => {})
     width: 100%;
     height: 100%;
     z-index: 4;
-    background: rgba(228, 228, 228, 0.25);
-    background-blend-mode: soft-light;
-    backdrop-filter: blur(50px);
+    background: rgba(217, 217, 217, 0.25);
+    backdrop-filter: blur(10px);
     padding: rem(82) rem(30) 0;
   }
   // .menu__body
@@ -523,7 +528,22 @@ onMounted(() => {})
 }
 
 //====================================================================================================
-
+@keyframes blur-in {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(50px);
+  }
+}
+@keyframes blur-out {
+  from {
+    backdrop-filter: blur(50px);
+  }
+  to {
+    backdrop-filter: blur(0px);
+  }
+}
 //Burger
 
 .icon-menu {

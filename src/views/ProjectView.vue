@@ -1,7 +1,7 @@
 <template>
   <SpinnerApp v-if="isLoading" />
   <div v-if="data" class="project">
-    <div class="project__slider-wrap" id="project">
+    <div class="project__slider-wrap">
       <swiper
         :key="route.fullPath"
         :modules="[Navigation, Thumbs]"
@@ -29,6 +29,7 @@
           <img :src="image" alt="" />
         </swiper-slide>
       </swiper>
+      <ProjectContent :data="data" :linksArray="linksArray" v-if="isMobile" />
       <swiper
         :modules="[EffectCoverflow, Thumbs]"
         :slidesPerView="'auto'"
@@ -57,48 +58,14 @@
         </swiper-slide>
       </swiper>
     </div>
-
-    <div class="project__content">
-      <div class="project__title">{{ data.title }}</div>
-      <div v-if="linksArray.length > 0" class="project__buttons">
-        <a
-          v-for="link of linksArray"
-          :key="link.link"
-          :href="link.link"
-          class="project__button"
-        >
-          view on
-          <img :src="link.img" alt="" />
-        </a>
-      </div>
-      <div class="project__descr">
-        <p>
-          {{ data.text }}
-        </p>
-      </div>
-      <div class="project__image">
-        <img :src="data.images[0]" alt="" />
-        <router-link
-          :to="{name: 'project', params: {slug: data.nextSlug, id: data.next}}"
-          class="project__next"
-        >
-          <img src="@/assets/images/icons/arrow.svg" alt="" />
-        </router-link>
-      </div>
-      <div class="project__block-back">
-        <router-link :to="{name: 'portfolio'}" class="project__back-button">
-          back to portfolio page
-          <img src="@/assets/images/icons/view.svg" alt="" />
-        </router-link>
-      </div>
-    </div>
+    <ProjectContent :data="data" :linksArray="linksArray" v-if="!isMobile" />
   </div>
 </template>
 
 <script setup>
 import {EffectCoverflow, Thumbs, Navigation} from 'swiper'
 import {SwiperSlide, Swiper} from 'swiper/vue'
-import {ref, onMounted, computed, onUnmounted} from 'vue'
+import {ref, onMounted, computed, onUnmounted, Teleport} from 'vue'
 import {useProjectStore} from '@/stores/project'
 import {storeToRefs} from 'pinia'
 import {useRoute, onBeforeRouteUpdate, useRouter} from 'vue-router'
@@ -106,6 +73,7 @@ import SpinnerApp from '@/components/SpinnerApp.vue'
 import {formatDate} from '@/helpers/methods'
 import {images} from '@/helpers/imageServices'
 import BreadcrumbsApp from '@/components/BreadcrumbsApp.vue'
+import ProjectContent from '@/components/ProjectContent.vue'
 
 const sliderThumbBreakpoints = {
   992: {
@@ -147,6 +115,7 @@ const normalizeDate = computed(() => {
 })
 
 const isMobile = ref(false)
+
 const handleResize = () => {
   if (window.innerWidth < 991) {
     isMobile.value = true
@@ -178,7 +147,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .project {
   display: grid;
   grid-template-columns: 1fr 464px;
@@ -219,6 +188,7 @@ onUnmounted(() => {
     flex-direction: column;
     @media (max-width: $tablet) {
       padding: rem(0) rem(43);
+      order: -1;
     }
   }
   // .project__title
