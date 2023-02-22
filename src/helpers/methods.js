@@ -16,3 +16,25 @@ export const chunk = (arr, size) => {
 
   return result
 }
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+export const formatDate = (dateValue) => {
+  const date = new Date(dateValue)
+  const year = date.getFullYear()
+  const day = date.getDate()
+  const month = months[date.getMonth()]
+  return `${day} ${month} / ${year} year`
+}

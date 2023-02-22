@@ -1,8 +1,17 @@
 import axios from '@/api/axios'
 
-const getData = (url) => {
-  return axios.get(url).then((response) => response.data)
+const getPortfolio = () => {
+  return axios.get('portfolio/').then((response) => response.data)
 }
+const getFeedbacks = () => {
+  return axios.get('feedback/').then((response) => response.data)
+}
+const getProject = (id) => {
+  return axios.get(`portfolio/${id}/`).then((response) => response.data)
+}
+
 export default {
-  getData,
+  getPortfolio,
+  getFeedbacks,
+  getProject,
 }

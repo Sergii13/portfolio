@@ -1,21 +1,22 @@
 import {ref, computed} from 'vue'
 import {defineStore} from 'pinia'
-import getFeedbacksApi from '@/api/getData'
+import getProjectApi from '@/api/getData'
 
-export const useFeedbackStore = defineStore('feedbacks', () => {
+export const useProjectStore = defineStore('project', () => {
   const isLoading = ref(false)
-  const feedbacks = ref(null)
+  const data = ref(null)
   const errors = ref(null)
 
-  function getFeedbacks() {
+  function getProject(id) {
     return new Promise((resolve, reject) => {
+      data.value = null
       isLoading.value = true
       errors.value = null
-      getFeedbacksApi
-        .getFeedbacks()
-        .then((data) => {
+      getProjectApi
+        .getProject(id)
+        .then((response) => {
           isLoading.value = false
-          feedbacks.value = data
+          data.value = response
           resolve(data)
         })
         .catch((data) => {
@@ -26,5 +27,5 @@ export const useFeedbackStore = defineStore('feedbacks', () => {
     })
   }
 
-  return {isLoading, feedbacks, errors, getFeedbacks}
+  return {isLoading, data, errors, getProject}
 })

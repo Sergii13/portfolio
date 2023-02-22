@@ -1,21 +1,38 @@
 <template>
   <div class="portfolio-card">
     <div class="portfolio-card__top">
-      <a href="" class="portfolio-card__name"> {{ project.name }}</a>
-      {{ project.type }}
-      <a href="" class="portfolio-card__image-ibg">
-        <img :src="project.image" alt="" />
-      </a>
+      <div class="portfolio-card__name">{{ project.title }}</div>
+      <router-link
+        :to="{
+          name: 'project',
+          params: {
+            slug: project.slug,
+            id: project.id,
+          },
+        }"
+        class="portfolio-card__image-ibg"
+      >
+        <img :src="project.images[0]" alt="" />
+      </router-link>
       <div class="portfolio-card__text">
         <p>
           {{ project.text }}
         </p>
       </div>
     </div>
-    <a :href="project.link" class="portfolio-card__link">
+    <router-link
+      :to="{
+        name: 'project',
+        params: {
+          slug: project.slug,
+          id: project.id,
+        },
+      }"
+      class="portfolio-card__link"
+    >
       view
       <img src="@/assets/images/icons/view.svg" alt="" />
-    </a>
+    </router-link>
   </div>
 </template>
 

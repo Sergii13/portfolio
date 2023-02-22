@@ -1,7 +1,7 @@
 <template>
   <SpinnerApp v-if="props.isLoading" />
   <div v-if="props.data" class="feedback">
-    <button class="feedback__button-more">
+    <button @click="goToNextSlide" class="feedback__button-more">
       view more
       <img src="@/assets/images/icons/view.svg" alt="" />
     </button>
@@ -18,14 +18,12 @@
       <swiper
         :modules="[Navigation, EffectCoverflow, Virtual, FreeMode]"
         :slides-per-view="'auto'"
-        :navigation="{
-          nextEl: '.feedback__button-more',
-        }"
         :grab-cursor="true"
         :watch-slides-progress="true"
         :direction="'vertical'"
         :loop="true"
         :space-between="70"
+        :slides-offset-after="100"
         :speed="1500"
         effect="coverflow"
         :centered-slides="false"
@@ -38,7 +36,6 @@
         }"
         :breakpoints="breakpointsSwiper"
         @swiper="onSwiper"
-        @reach-end="reachendSwiper"
         class="feedback__slider"
       >
         <template v-if="isMobile">
@@ -85,6 +82,7 @@ import {
 import SpinnerApp from '@/components/SpinnerApp.vue'
 import {chunk} from '@/helpers/methods.js'
 import NavSlider from '@/components/layout/NavSlider.vue'
+import {onBeforeRouteLeave} from 'vue-router'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
@@ -122,6 +120,13 @@ const props = defineProps({
 })
 
 const isMobile = ref(false)
+const handleResize = () => {
+  if (window.innerWidth < 991) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+}
 
 const typesArray = computed(() => {
   if (props.isPortfolio) {
@@ -148,6 +153,10 @@ const filteredData = computed(() => {
   }
 })
 
+const handleChangeFilter = (newType) => {
+  currentType.value = newType
+}
+
 const slideArray = computed(() => {
   return chunk(filteredData.value, limit)
 })
@@ -157,24 +166,23 @@ const swiperMain = ref(null)
 const onSwiper = (swiper) => {
   swiperMain.value = swiper
 }
-const reachendSwiper = () => {
-  // swiperMain.value.snapGrid = [swiperMain.value.slidesGrid - 2]
-}
-const handleChangeFilter = (newType) => {
-  currentType.value = newType
+
+const goToNextSlide = () => {
+  swiperMain.value.slideNext()
 }
 
 onBeforeUpdate(() => {
-  if (swiperMain.value) {
+  if (swiperMain.value && swiperMain.value.params) {
     swiperMain.value.params.loop = false
   }
 })
 
 onUpdated(() => {
-  if (swiperMain.value) {
+  if (swiperMain.value && swiperMain.value.params) {
     swiperMain.value.params.loop = true
   }
 })
+
 onMounted(() => {
   window.addEventListener('resize', handleResize)
   handleResize()
@@ -184,13 +192,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
 })
 
-const handleResize = () => {
-  if (window.innerWidth < 991) {
-    isMobile.value = true
-  } else {
-    isMobile.value = false
-  }
-}
 function randomKey() {
   return new Date().getTime() + Math.floor(Math.random() * 10000).toString()
 }

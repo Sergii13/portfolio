@@ -19,7 +19,7 @@ const {feedbacks, isLoading} = storeToRefs(store)
 const router = useRouter()
 
 onMounted(() => {
-  store.getFeedbacks('feedback/').catch(() => {
+  store.getFeedbacks().catch(() => {
     router.push({name: '404'})
   })
 })

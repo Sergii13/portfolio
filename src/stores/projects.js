@@ -7,12 +7,13 @@ export const useProjectsStore = defineStore('projects', () => {
   const projects = ref(null)
   const errors = ref(null)
 
-  function getProjects(url) {
+  function getProjects() {
     return new Promise((resolve, reject) => {
+      projects.value = null
       isLoading.value = true
       errors.value = null
       getProjectsApi
-        .getData(url)
+        .getPortfolio()
         .then((data) => {
           isLoading.value = false
           projects.value = data
