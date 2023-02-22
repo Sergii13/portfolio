@@ -1,26 +1,33 @@
+import fiverIcon from '@/assets/images/logo-service/fiver.png'
+import freelancehuntIcon from '@/assets/images/logo-service/freelancehunt.png'
+import upworkIcon from '@/assets/images/logo-service/upwork.png'
+import peopleIcon from '@/assets/images/logo-service/people.png'
+import freelancerIcon from '@/assets/images/logo-service/freelancer.png'
+import weblancerIcon from '@/assets/images/logo-service/weblancer.png'
+
 export const images = [
   {
     type: 'fiver',
-    img: '/src/assets/images/logo-service/fiver.png',
+    img: fiverIcon,
   },
   {
     type: 'freelancehunt',
-    img: '/src/assets/images/logo-service/freelancehunt.png',
+    img: freelancehuntIcon,
   },
   {
     type: 'upwork',
-    img: '/src/assets/images/logo-service/upwork.png',
+    img: upworkIcon,
   },
   {
     type: 'people',
-    img: '/src/assets/images/logo-service/people.png',
+    img: peopleIcon,
   },
   {
     type: 'freelancer',
-    img: '/src/assets/images/logo-service/freelancer.png',
+    img: freelancerIcon,
   },
   {
     type: 'weblancer',
-    img: '/src/assets/images/logo-service/weblancer.png',
+    img: weblancerIcon,
   },
 ]
