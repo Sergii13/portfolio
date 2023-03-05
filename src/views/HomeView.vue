@@ -1,77 +1,69 @@
 <template>
-  <section class="main-block">
+  <SpinnerApp v-if="isLoading" />
+  <section v-if="data" class="main-block">
     <div class="main-block__row">
       <div class="main-block__left">
-        <div class="main-block__slider-wrap">
-          <swiper
-            class="main-block__slider"
-            :modules="[EffectCoverflow, Navigation]"
-            effect="coverflow"
-            :coverflowEffect="{
-              rotate: -40,
-              stretch: 200,
-              depth: 400,
-              modifier: 1,
-              slideShadows: false,
-            }"
-            :navigation="{
-              nextEl: '.arrow.next',
-              prevEl: '.arrow.prev',
-            }"
-            :slides-per-view="'auto'"
-            :speed="800"
-            :centered-slides="true"
-            :loop="true"
-            :breakpoints="breakpointsSwiper"
-          >
-            <swiper-slide class="main-block__slide">
-              <div class="main-block__image-slide-ibg">
-                <img src="@/assets/images/main-img/slide02.jpg" alt="" />
-              </div>
-            </swiper-slide>
-            <swiper-slide class="main-block__slide">
-              <div class="main-block__image-slide-ibg">
-                <img src="@/assets/images/main-img/slide02.jpg" alt="" />
-              </div>
-            </swiper-slide>
-            <swiper-slide class="main-block__slide">
-              <div class="main-block__image-slide-ibg">
-                <img src="@/assets/images/main-img/slide02.jpg" alt="" />
-              </div>
-            </swiper-slide>
-            <swiper-slide class="main-block__slide">
-              <div class="main-block__image-slide-ibg">
-                <img src="@/assets/images/main-img/slide02.jpg" alt="" />
-              </div>
-            </swiper-slide>
-            <swiper-slide class="main-block__slide">
-              <div class="main-block__image-slide-ibg">
-                <img src="@/assets/images/main-img/slide02.jpg" alt="" />
-              </div>
-            </swiper-slide>
-          </swiper>
-          <div class="main-block__arrows">
-            <button class="arrow prev">
-              <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
-            </button>
-            <button class="arrow next">
-              <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
-            </button>
+        <div class="main-block__top-left">
+          <div class="main-block__slider-wrap">
+            <swiper
+              class="main-block__slider"
+              :modules="[EffectCoverflow, Navigation]"
+              effect="coverflow"
+              :coverflowEffect="{
+                rotate: -40,
+                stretch: 200,
+                depth: 400,
+                modifier: 1,
+                slideShadows: false,
+              }"
+              :navigation="{
+                nextEl: '.arrow.next',
+                prevEl: '.arrow.prev',
+              }"
+              :slides-per-view="'auto'"
+              :speed="800"
+              :centered-slides="true"
+              :loop="true"
+              :breakpoints="breakpointsSwiper"
+              @slideChange="changeSwiperIndex"
+              @swiper="onSwiper"
+            >
+              <swiper-slide
+                v-for="project of data.projects"
+                :key="project.link"
+                class="main-block__slide"
+              >
+                <div class="main-block__image-slide-ibg">
+                  <img :src="project.image" alt="" />
+                </div>
+              </swiper-slide>
+            </swiper>
+            <div class="main-block__arrows">
+              <button class="arrow prev">
+                <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
+              </button>
+              <button class="arrow next">
+                <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <div class="main-block__button-wrap">
+            <a
+              href=""
+              @click.prevent="handleOpenModal"
+              class="button main-block__button _fw"
+            >
+              <span> Press to watch </span>
+            </a>
           </div>
         </div>
-        <div class="main-block__button-wrap">
-          <a href="" class="button main-block__button _fw">
-            <span> Press to watch </span>
-          </a>
-        </div>
-
         <h2 class="main-block__title-big">
           Daniel Sonis
           <span>@denielsonis</span>
         </h2>
       </div>
       <div class="main-block__content">
-        <div class="main-block__title">Hey, I am Daniel</div>
+        <div class="main-block__title">Hey, I am {{ data.name }}</div>
         <div class="main-block__avatar-block">
           <div class="main-block__smile main-block__smile_1">
             <img src="@/assets/images/icons/smile01.svg" alt="" />
@@ -80,21 +72,16 @@
             <img src="@/assets/images/icons/smile02.svg" alt="" />
           </div>
           <div class="main-block__avatar-ibg">
-            <img src="@/assets/images/main-img/avatar.jpg" alt="" />
+            <img :src="data.avatar" alt="" />
           </div>
         </div>
         <div class="main-block__text">
-          I have been working in the IT field for more than 12 years, I have
-          extensive experience in developing software products of any kind, as
-          well as competencies in approximate areas.
+          {{ data.text }}
         </div>
         <div class="main-block__tags">
-          <span class="main-block__tag">#css </span>
-          <span class="main-block__tag">#php </span>
-          <span class="main-block__tag">#react </span>
-          <span class="main-block__tag">#web application</span>
-          <span class="main-block__tag">#любой тег </span>
-          <span class="main-block__tag">contacts / work places</span>
+          <span v-for="tag of data.tags" :key="tag" class="main-block__tag"
+            >#{{ tag }}
+          </span>
         </div>
         <div class="main-block__links">
           <a href="" class="main-block__link">
@@ -118,11 +105,18 @@
         </div>
       </div>
     </div>
+    <ModalHome :data="dataToPopup" />
   </section>
 </template>
 <script setup>
+import {onMounted, ref, computed, onUnmounted} from 'vue'
 import {EffectCoverflow, Navigation} from 'swiper'
-import {Swiper, SwiperSlide, useSwiper} from 'swiper/vue'
+import {Swiper, SwiperSlide} from 'swiper/vue'
+import {useMainPage} from '@/stores/mainPage'
+import {useModal} from '@/stores/modal'
+import {storeToRefs} from 'pinia'
+import SpinnerApp from '@/components/SpinnerApp.vue'
+import ModalHome from '@/views/ModalHome.vue'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
@@ -148,6 +142,48 @@ const breakpointsSwiper = {
     },
   },
 }
+
+const storeModal = useModal()
+const handleOpenModal = () => {
+  document.documentElement.classList.add('portfolio')
+  storeModal.openModal()
+}
+
+const storeMain = useMainPage()
+const {data, isLoading} = storeToRefs(storeMain)
+
+onMounted(() => {
+  storeMain.getMain()
+})
+
+const mainSwiper = ref(null)
+const realIndex = ref(null)
+const onSwiper = (swiper) => {
+  mainSwiper.value = swiper
+  realIndex.value = mainSwiper.value.realIndex
+  setColorWithData()
+}
+const changeSwiperIndex = () => {
+  if (mainSwiper.value) {
+    realIndex.value = mainSwiper.value.realIndex
+    setColorWithData()
+  }
+}
+const dataToPopup = computed(() => {
+  if (data.value) {
+    return data.value.projects[realIndex.value]
+  }
+})
+const setColorWithData = () => {
+  if (dataToPopup.value) {
+    const root = document.documentElement
+    root.style.setProperty('--colorSwiper', `${dataToPopup.value.color}`)
+  }
+}
+onUnmounted(() => {
+  const root = document.documentElement
+  root.style.removeProperty('--colorSwiper')
+})
 </script>
 <style lang="scss" scoped>
 .main-block {
@@ -159,8 +195,7 @@ const breakpointsSwiper = {
     display: flex;
     gap: 60px;
     padding-left: rem(35);
-    align-items: flex-start;
-
+    height: 100%;
     @media (max-width: $pc) {
       padding-left: 0;
       gap: rem(20);
@@ -168,6 +203,7 @@ const breakpointsSwiper = {
 
     @media (max-width: $tablet) {
       flex-direction: column-reverse;
+      justify-content: flex-end;
       gap: 0;
     }
   }
@@ -205,13 +241,9 @@ const breakpointsSwiper = {
       max-width: 100%;
       padding: 0;
     }
-
-    &:not(:last-child) {
-      margin-bottom: rem(50);
-
-      @media (max-width: $tablet) {
-        margin-bottom: rem(25);
-      }
+    margin-bottom: rem(50);
+    @media (max-width: $tablet) {
+      margin-bottom: rem(25);
     }
   }
 
@@ -379,8 +411,12 @@ const breakpointsSwiper = {
     span {
       display: block;
       font-weight: 600;
-      background: linear-gradient(263.18deg, #005bbb 16.86%, #6db4ff 104.2%),
-        linear-gradient(0deg, #212121, #212121);
+      background: linear-gradient(
+        263.18deg,
+        rgba(0, 0, 0, 0.5) 46.86%,
+        var(--colorSwiper) 84.2%
+      );
+
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       @include adaptiveValue('font-size', 96, 50, 0, 1920, 768);
@@ -427,18 +463,26 @@ const breakpointsSwiper = {
       border-radius: 60px;
       width: 100%;
       z-index: -1;
+      opacity: 0.2;
       height: 100%;
-      mix-blend-mode: soft-light;
       background: #cad3f3;
-
+      background: linear-gradient(
+        263.18deg,
+        rgba(0, 0, 0, 0.5) 26.86%,
+        var(--colorSwiper) 104.2%
+      );
       @media (max-width: $tablet) {
         background: none;
         border-radius: 0px;
       }
 
       .dark-theme & {
-        background: rgba(255, 255, 255, 0.03);
-
+        background: rgba(255, 255, 255, 0.43);
+        background: linear-gradient(
+          263.18deg,
+          rgba(255, 255, 255, 0.03) 46.86%,
+          var(--colorSwiper) 104.2%
+        );
         @media (max-width: $tablet) {
           background: none;
           border-radius: 0px;

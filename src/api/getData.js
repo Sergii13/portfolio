@@ -9,9 +9,13 @@ const getFeedbacks = () => {
 const getProject = (id) => {
   return axios.get(`portfolio/${id}/`).then((response) => response.data)
 }
+const getMain = () => {
+  return axios.get('main/1').then((response) => response.data)
+}
 
 export default {
   getPortfolio,
   getFeedbacks,
   getProject,
+  getMain,
 }

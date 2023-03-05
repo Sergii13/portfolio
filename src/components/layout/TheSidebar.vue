@@ -2,40 +2,40 @@
   <sidebar class="wrapper__sidebar sidebar">
     <ul class="sidebar__list sidebar__list_nav">
       <li class="sidebar__item">
-        <RouterLink
+        <router-link
           :to="{name: 'main'}"
           :class="{active: route.name === 'main'}"
           class="sidebar__link"
         >
           <SidebarIcon :path="pathHome" />
-        </RouterLink>
+        </router-link>
       </li>
       <li class="sidebar__item">
-        <RouterLink
+        <router-link
           :to="{name: 'portfolio'}"
           class="sidebar__link"
           :class="{active: route.name === 'portfolio'}"
         >
           <SidebarIcon :path="pathPortfolio" />
-        </RouterLink>
+        </router-link>
       </li>
       <li class="sidebar__item">
-        <RouterLink
+        <router-link
           :to="{name: 'feedback'}"
           class="sidebar__link"
           :class="{active: route.name === 'feedback'}"
         >
           <SidebarIcon :path="pathFeedback" />
-        </RouterLink>
+        </router-link>
       </li>
       <li class="sidebar__item">
-        <RouterLink
+        <router-link
           :to="{name: 'contacts'}"
           class="sidebar__link"
           :class="{active: route.name === 'contacts'}"
         >
           <SidebarIcon :path="pathContacts" />
-        </RouterLink>
+        </router-link>
       </li>
     </ul>
     <div class="sidebar__line"></div>

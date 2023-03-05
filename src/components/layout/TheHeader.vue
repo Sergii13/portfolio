@@ -69,7 +69,7 @@
           <ul class="menu__list">
             <li class="menu__item">
               <router-link
-                @click="openMenu = false"
+                @click="handleClick"
                 :to="{name: 'main'}"
                 class="menu__link"
               >
@@ -91,7 +91,7 @@
             </li>
             <li class="menu__item">
               <router-link
-                @click="openMenu = false"
+                @click="handleClick"
                 :to="{name: 'portfolio'}"
                 class="menu__link"
               >
@@ -113,7 +113,7 @@
             </li>
             <li class="menu__item">
               <router-link
-                @click="openMenu = false"
+                @click="handleClick"
                 :to="{name: 'feedback'}"
                 class="menu__link"
               >
@@ -135,7 +135,7 @@
             </li>
             <li class="menu__item">
               <router-link
-                @click="openMenu = false"
+                @click="handleClick"
                 :to="{name: 'contacts'}"
                 class="menu__link"
               >
@@ -215,6 +215,10 @@ const currentPage = computed(() => {
   }
   return ''
 })
+const handleClick = () => {
+  openMenu.value = false
+  document.documentElement.classList.remove('lock')
+}
 
 const toggleMobileMenu = () => {
   if (openMenu.value) {

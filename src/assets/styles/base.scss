@@ -217,6 +217,9 @@ html {
   position: relative;
   z-index: 2;
 }
+.popup-show body {
+  overflow: hidden;
+}
 body {
   &.dark-theme {
     .wrapper {

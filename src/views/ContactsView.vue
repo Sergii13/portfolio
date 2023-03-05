@@ -2,7 +2,7 @@
   <div class="contacts">
     <div class="contacts__row">
       <div class="contacts__item item-contacts">
-        <a href="" class="item-contacts__link">
+        <a @click.prevent="handleOpenModal" href="" class="item-contacts__link">
           <p class="item-contacts__open-text">OPEN</p>
           <span>
             <img
@@ -70,22 +70,23 @@
       </div>
     </div>
   </div>
+  <ModalContact />
 </template>
 
 <script setup>
 import {useTheme} from '@/composables/useTheme.js'
-import {onMounted, computed, ref, onUnmounted} from 'vue'
+import {onMounted, ref, onUnmounted} from 'vue'
+import ModalContact from '@/views/ModalContact.vue'
+import {useModal} from '@/stores/modal'
+
+const store = useModal()
+
+const handleOpenModal = () => {
+  store.openModal()
+}
 
 const {currentTheme} = useTheme()
 const isMobile = ref(false)
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  handleResize()
-})
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
 
 const handleResize = () => {
   if (window.innerWidth < 991) {
@@ -94,6 +95,14 @@ const handleResize = () => {
     isMobile.value = false
   }
 }
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  handleResize()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <style lang="scss" scoped>

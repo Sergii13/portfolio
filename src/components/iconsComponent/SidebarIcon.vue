@@ -1,6 +1,5 @@
 <template>
   <svg
-    :style="{fill: color ? color : 'url(#gradient)'}"
     width="21"
     height="20"
     viewBox="0 0 21 20"
@@ -23,6 +22,8 @@
   </svg>
 </template>
 <script setup>
+import {onMounted, ref} from 'vue'
+
 const props = defineProps({
   path: {
     type: String,
@@ -33,4 +34,16 @@ const props = defineProps({
     required: false,
   },
 })
+const primaryColor = ref(null)
+
+onMounted(() => {
+  const styles = getComputedStyle(document.documentElement)
+  primaryColor.value = styles.getPropertyValue('--colorSwiper')
+})
 </script>
+<style lang="scss" scoped>
+svg {
+  fill: var(--colorSwiper, url(#gradient));
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+}
+</style>

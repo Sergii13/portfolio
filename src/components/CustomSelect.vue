@@ -74,6 +74,9 @@ onMounted(() => {
   justify-content: center;
   border-left: 1px solid #858894;
   border-right: 1px solid #858894;
+  @media (max-width: em(1600)) {
+    height: 55px;
+  }
 }
 
 .custom-select .selected {
@@ -89,6 +92,13 @@ onMounted(() => {
 .custom-select.open {
   background: #c9d3f6;
   background-blend-mode: soft-light;
+  .dark-theme & {
+    background: linear-gradient(
+      180.06deg,
+      rgba(25, 30, 39, 0.5) 0.05%,
+      rgba(26, 32, 41, 0.5) 105.88%
+    );
+  }
 }
 
 .custom-select .items {
@@ -103,6 +113,14 @@ onMounted(() => {
   z-index: 1;
   border: 1px solid #858894;
   margin: 0 -1px;
+  .dark-theme & {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+      180.06deg,
+      rgba(25, 30, 39, 0.5) 0.05%,
+      rgba(26, 32, 41, 0.5) 105.88%
+    );
+  }
 }
 .custom-select__icon-title {
   width: 0.9375rem;

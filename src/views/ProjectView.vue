@@ -262,26 +262,39 @@ onUnmounted(() => {
     margin: clamp(10px, 2.7vh, 30px) 0;
     font-size: clamp(12px, 2vh, 20px);
     line-height: 115%; /* 23/20 */
-    overflow-y: hidden;
+    overflow-y: auto;
     text-overflow: ellipsis;
     max-height: rem(223);
     @media (max-width: em(1600)) {
       font-size: rem(16);
+      max-height: rem(165);
+      padding-right: 10px;
     }
     @media (max-width: $pc) {
       font-size: rem(12);
       margin: rem(20) 0 rem(25);
     }
     @media (max-width: $tablet) {
-      max-height: auto;
+      max-height: none;
     }
   }
   // .project__image
   &__image {
     position: relative;
-
+    @media (max-width: em(1600)) {
+      height: rem(160);
+    }
     img {
       max-width: 100%;
+      max-height: 100%;
+      @media (max-width: em(1600)) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
     &:not(:last-child) {
       margin-bottom: rem(24);
@@ -306,6 +319,11 @@ onUnmounted(() => {
     right: 0;
     transform: translate(20px, -50%);
     transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+    img {
+      position: relative;
+      height: auto;
+      width: auto;
+    }
     @media (max-width: $pc) {
       width: 40px;
       height: 40px;
@@ -323,9 +341,12 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 50px 20px;
     position: relative;
-    flex: 1 1 auto;
+    margin-top: auto;
+    @media (max-width: em(1600)) {
+      padding: rem(30) 20px;
+    }
     @media (max-width: $tablet) {
       display: none;
     }
