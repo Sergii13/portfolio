@@ -87,7 +87,10 @@
               data-error="Ошибка"
               placeholder="Enter your message"
               class="input form__input"
-            ></textarea>
+            >
+          {{ props.textMessage }}
+          </textarea
+            >
           </div>
           <div class="form__item">
             <button class="form__button">Send Request</button>
@@ -119,7 +122,15 @@
 
 <script setup>
 import ModalApp from '@/components/ModalApp.vue'
+import {useTheme} from '@/composables/useTheme.js'
 
+const props = defineProps({
+  textMessage: {
+    type: String,
+    required: false,
+  },
+})
+const {currentTheme} = useTheme()
 </script>
 
 <style lang="scss" scoped></style>

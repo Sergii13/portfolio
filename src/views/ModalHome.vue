@@ -20,7 +20,10 @@
         </div>
         <div class="popup__right">
           <div class="popup__links">
-            <router-link :to="{name: 'contacts'}" class="popup__create-site">
+            <router-link
+              :to="{name: 'contacts', query: {send_request: true}}"
+              class="popup__create-site"
+            >
               Request to create a website
               <img src="@/assets/images/icons/create-sitesvg.svg" alt="" />
             </router-link>

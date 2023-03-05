@@ -27,7 +27,7 @@
                 class="popup__close"
               >
                 <img
-                  v-if="props.otherClass"
+                  v-if="props.otherClass || currentTheme === 'dark-theme'"
                   src="@/assets/images/icons/close2.svg"
                   alt=""
                 />
@@ -47,6 +47,9 @@
 <script setup>
 import {useModal} from '@/stores/modal'
 import {storeToRefs} from 'pinia'
+import {useTheme} from '@/composables/useTheme.js'
+
+const {currentTheme} = useTheme()
 
 const props = defineProps({
   otherClass: {
@@ -138,7 +141,7 @@ body::after {
     );
 
     mix-blend-mode: normal;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
   }
 }
 .popup {

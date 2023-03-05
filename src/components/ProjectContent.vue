@@ -17,7 +17,7 @@
         {{ data.text }}
       </p>
     </div>
-    <div class="project__image">
+    <div class="project__image-ibg">
       <img :src="data.images[0]" alt="" />
       <router-link
         :to="{

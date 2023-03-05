@@ -279,10 +279,14 @@ onUnmounted(() => {
     }
   }
   // .project__image
-  &__image {
-    position: relative;
+  &__image-ibg {
+    padding-bottom: 60.775862%; /* 282/464 */
+    @media (max-height: em(1050)) {
+      padding-bottom: 40%;
+    }
     @media (max-width: em(1600)) {
       height: rem(160);
+      padding-bottom: 0;
     }
     img {
       max-width: 100%;
@@ -320,9 +324,9 @@ onUnmounted(() => {
     transform: translate(20px, -50%);
     transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
     img {
-      position: relative;
-      height: auto;
-      width: auto;
+      position: relative !important;
+      height: auto !important;
+      width: auto !important;
     }
     @media (max-width: $pc) {
       width: 40px;

@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <ModalContact />
+  <ModalContact :textMessage="textMessage" />
 </template>
 
 <script setup>
@@ -78,7 +78,10 @@ import {useTheme} from '@/composables/useTheme.js'
 import {onMounted, ref, onUnmounted} from 'vue'
 import ModalContact from '@/views/ModalContact.vue'
 import {useModal} from '@/stores/modal'
+import {useRoute} from 'vue-router'
 
+const textMessage = ref('')
+const route = useRoute()
 const store = useModal()
 
 const handleOpenModal = () => {
@@ -97,6 +100,10 @@ const handleResize = () => {
 }
 
 onMounted(() => {
+  if (route.query.send_request) {
+    handleOpenModal()
+    textMessage.value = `Доброго дня, мені сподобались Ваші роботи. Маю до Вас ділову пропозицію.`
+  }
   window.addEventListener('resize', handleResize)
   handleResize()
 })
