@@ -288,6 +288,8 @@ body::after {
     top: 50%;
     transform: translateY(-50%);
     right: 60px;
+    width: 15px;
+    height: 15px;
     @media (max-width: $tablet) {
       right: 20px;
     }
@@ -578,6 +580,9 @@ body::after {
   padding: rem(42) rem(48);
   .dark-theme & {
     background: rgba(217, 217, 217, 0.1);
+    @media (max-width: $mobile) {
+      background: none;
+    }
   }
   @media (max-width: $tablet) {
     padding: rem(20);

@@ -45,10 +45,13 @@
         </p>
       </div>
       <div class="popup__links-mob">
-        <a href="" class="popup__create-site">
+        <router-link
+          class="popup__create-site"
+          :to="{name: 'contacts', query: {send_request: true}}"
+        >
           Request to create a website
           <img src="@/assets/images/icons/create-sitesvg.svg" alt="" />
-        </a>
+        </router-link>
         <a :href="props.data.link" class="popup__open-site">
           Open Link
           <img src="@/assets/images/icons/link.svg" alt="" />
