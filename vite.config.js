@@ -1,5 +1,6 @@
 import {fileURLToPath, URL} from 'node:url'
-
+import postcss from 'postcss'
+import autoprefixer from 'autoprefixer'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 
