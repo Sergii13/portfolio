@@ -12,6 +12,10 @@ export default defineConfig({
     },
   },
   css: {
+    postcss: {
+      plugins: [postcss(), autoprefixer()],
+    },
+
     preprocessorOptions: {
       scss: {
         additionalData: `@import "@/assets/styles/variables.scss";`,
