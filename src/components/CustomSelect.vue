@@ -74,6 +74,10 @@ onMounted(() => {
   justify-content: center;
   border-left: 1px solid #858894;
   border-right: 1px solid #858894;
+  .dark-theme & {
+    border-left: 1px solid #373b3f;
+    border-right: 1px solid #373b3f;
+  }
   @media (max-width: em(1600)) {
     height: 55px;
   }

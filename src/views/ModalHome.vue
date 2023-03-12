@@ -83,6 +83,7 @@ router.beforeEach(() => {
 <style lang="scss" scoped>
 .popup__type {
   text-transform: uppercase;
+  color: #e4e4e4;
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
   &:hover {
     text-decoration: underline;

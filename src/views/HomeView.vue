@@ -33,17 +33,44 @@
                 :key="project.link"
                 class="main-block__slide"
               >
-                <div class="main-block__image-slide-ibg">
+                <div
+                  @click="handleOpenModal"
+                  class="main-block__image-slide-ibg"
+                >
                   <img :src="project.image" alt="" />
                 </div>
               </swiper-slide>
             </swiper>
             <div class="main-block__arrows">
               <button class="arrow prev">
-                <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
+                <svg
+                  width="9"
+                  height="15"
+                  viewBox="0 0 9 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.460789 7.53856L7.12145 14.1992L8.49902 12.8216L3.11064 7.43326L8.39917 2.14474L7.02277 0.768333L0.362109 7.42899L0.466233 7.53312L0.460789 7.53856Z"
+                  />
+                </svg>
               </button>
               <button class="arrow next">
-                <img src="@/assets/images/icons/arrow-slide.svg" alt="" />
+                <svg
+                  width="9"
+                  height="15"
+                  viewBox="0 0 9 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.460789 7.53856L7.12145 14.1992L8.49902 12.8216L3.11064 7.43326L8.39917 2.14474L7.02277 0.768333L0.362109 7.42899L0.466233 7.53312L0.460789 7.53856Z"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -237,8 +264,15 @@ onUnmounted(() => {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    @media (max-width: em(1600)) {
+      gap: 60px;
+    }
+    @media (max-height: em(1050)) {
+      gap: 60px;
+    }
+    @media (max-width: $pc) {
+      gap: 30px;
+    }
     @media (max-width: $tablet) {
       width: 100%;
       gap: 0;
@@ -252,17 +286,18 @@ onUnmounted(() => {
     max-width: rem(800);
     width: 100%;
     margin: 0 auto;
-    overflow: hidden;
-    @media (max-width: $pc) {
-      overflow: hidden;
+    @media (max-width: em(1850)) {
       padding: 0 30px;
     }
-
+    @media (max-width: $pc) {
+      padding: 0 50px;
+    }
     @media (max-width: $tablet) {
       overflow: unset;
       max-width: 100%;
       padding: 0;
     }
+
     margin-bottom: rem(50);
     @media (max-width: $tablet) {
       margin-bottom: rem(25);
@@ -280,7 +315,9 @@ onUnmounted(() => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    @media (max-width: em(1850)) {
+      width: calc(100% + 30px);
+    }
     @media (max-width: em(1400)) {
       width: 100%;
     }
@@ -290,7 +327,7 @@ onUnmounted(() => {
     }
 
     .arrow {
-      background-color: #e4e4e4;
+      background: #eef3ff;
       mix-blend-mode: soft-light;
       backdrop-filter: blur(5px);
       width: 30px;
@@ -304,6 +341,11 @@ onUnmounted(() => {
       .dark-theme & {
         background: rgba(255, 255, 255, 0.12);
       }
+      svg {
+        transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+        fill: var(--iconColor, #539fef);
+      }
+
       @media (any-hover: hover) {
         &:hover {
           box-shadow: 0 0 15px var(--main-color);
@@ -311,7 +353,7 @@ onUnmounted(() => {
       }
 
       &.next {
-        img {
+        svg {
           transform: rotate(180deg);
         }
       }
@@ -404,6 +446,10 @@ onUnmounted(() => {
 
     @media (max-width: $mobile) {
       max-width: rem(252);
+      &::after {
+        content: '';
+        border: 1px solid #ffffff;
+      }
     }
   }
 
@@ -412,7 +458,6 @@ onUnmounted(() => {
     font-weight: 600;
     @include adaptiveValue('font-size', 120, 50, 0, 1920, 768);
     line-height: 115%;
-    /* 138/120 */
     margin-top: 7vh;
 
     @media (max-height: em(1080)) {
@@ -421,11 +466,11 @@ onUnmounted(() => {
 
     @media (max-width: em(1600)) {
       margin-top: rem(30);
-      font-size: rem(80);
+      font-size: rem(90);
     }
 
     @media (max-width: $pc) {
-      font-size: rem(60);
+      font-size: rem(72);
     }
 
     @media (max-width: $tablet) {
@@ -450,6 +495,15 @@ onUnmounted(() => {
         opacity: 0.6;
         animation: gradient-text-animation 1s linear;
       }
+
+      @media (max-width: em(1600)) {
+        font-size: rem(70);
+      }
+
+      @media (max-width: $pc) {
+        font-size: rem(50);
+      }
+
       // animation: move-bg 0.3s ease-in-out infinite;
     }
     /* 100/96 */
@@ -498,17 +552,10 @@ onUnmounted(() => {
       .dark-theme & {
         background: linear-gradient(180.15deg, #c4c4c4 0.13%, #6db4ff 99.87%);
         opacity: 0.02;
+        @media (max-width: $tablet) {
+          display: none;
+        }
       }
-
-      /* 
-  .animate & {
-        width: 200%;
-        transform: translateX(-40%);
-        background: 0 -2000px linear-gradient(263.18deg, rgba(0, 0, 0, 0.5)
-              26.86%, var(--colorSwiper) 104.2%);
-      }
-*/
-
       @media (max-width: $tablet) {
         background: none;
         border-radius: 0px;
@@ -567,7 +614,7 @@ onUnmounted(() => {
     .dark-theme & {
       background: radial-gradient(
         50% 50% at 50% 50%,
-        #d9d9d9 0%,
+        rgba(255, 255, 255, 0.2) 0%,
         rgba(217, 217, 217, 0) 100%
       );
       border: 5px solid #5e626d;
@@ -621,8 +668,7 @@ onUnmounted(() => {
     flex-wrap: wrap;
     max-width: 600px;
     margin: 0 auto;
-    gap: 5vh 18px;
-
+    gap: 50px 18px;
     @media (max-width: em(1600)) {
       gap: rem(20) rem(10);
     }
@@ -646,7 +692,28 @@ onUnmounted(() => {
     border-radius: 10px;
     background: var(--main-color);
     padding: 0 rem(10);
-
+    &::after {
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+    }
+    .color & {
+      background: transparent;
+      &::after {
+        content: '';
+        opacity: 0.1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background: linear-gradient(
+          263.18deg,
+          rgba(12, 17, 20, 1) 16.86%,
+          var(--iconColor) 104.2%
+        );
+      }
+    }
     @media (max-width: $mobile) {
       font-weight: 700;
       font-size: 7px;
@@ -680,12 +747,31 @@ onUnmounted(() => {
 
   // .main-block__link
   &__link {
+    position: relative;
     .dark-theme & {
       background: #0c1325;
     }
 
-    background: #f3f7fd;
-    background-blend-mode: soft-light;
+    background: rgba(228, 228, 228, 0.5);
+    .color & {
+      background: transparent;
+      &::after {
+        content: '';
+        opacity: 0.1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+        background: linear-gradient(
+          263.18deg,
+          rgba(12, 17, 20, 1) 16.86%,
+          var(--iconColor) 104.2%
+        );
+      }
+    }
     backdrop-filter: blur(10px);
     width: 55px;
     height: 55px;

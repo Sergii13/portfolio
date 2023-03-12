@@ -119,29 +119,40 @@ body::after {
 }
 .popup-show {
   .popup__overlay {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 }
 .portfolio .popup__head {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   background-blend-mode: color-burn;
+  color: #e4e4e4;
+}
+.portfolio .popup-main {
+  @media (max-width: $mobile) {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.11) 0%,
+      rgba(255, 255, 255, 0.11) 106.24%
+    );
+  }
+  @media (min-width: $mobile) {
+    background: none;
+  }
 }
 .portfolio body.dark-theme {
   .popup__head {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
   }
 }
 .portfolio.popup-show body {
   &::after {
-    opacity: 1;
     background: linear-gradient(
       242.91deg,
-      rgba(52, 57, 60, 0.9) -21.16%,
-      rgba(38, 19, 15, 0.9) 99.17%
+      rgba(52, 57, 60, 0.75) -21.16%,
+      rgba(38, 19, 15, 0.75) 99.17%
     );
-
-    mix-blend-mode: normal;
-    backdrop-filter: blur(15px);
+    content: '';
+    backdrop-filter: blur(2px);
   }
 }
 .popup {
@@ -203,8 +214,8 @@ body::after {
       @media (max-width: $mobile) {
         background: linear-gradient(
           180deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0) 106.24%
+          rgba(0, 0, 0, 0.01) 0%,
+          rgba(0, 0, 0, 0.01) 106.24%
         );
         backdrop-filter: blur(12.5px);
         border-radius: 20px;
@@ -224,6 +235,8 @@ body::after {
   }
   // .popup__content
   &__content {
+    position: relative;
+    z-index: 154;
   }
   &__head-row {
     display: flex;
@@ -308,6 +321,9 @@ body::after {
       font-size: 15px;
       line-height: 17px;
       color: #e4e4e4;
+      @media (max-width: $mobile) {
+        font-size: 12px;
+      }
       &:not(:last-child) {
         position: relative;
         &::after {
@@ -317,6 +333,9 @@ body::after {
           position: relative;
           display: inline-block;
           margin: 0 rem(10);
+          @media (max-width: $mobile) {
+            margin: 0 5px;
+          }
         }
       }
       a {
@@ -357,6 +376,7 @@ body::after {
     font-size: 16px;
     line-height: 20px;
     padding: 0 20px;
+    color: #e4e4e4;
     @media (max-width: $mobile) {
       font-size: 12px;
       line-height: 14px;
@@ -367,7 +387,7 @@ body::after {
   }
   &__create-site {
     display: inline-flex;
-    background: rgba(217, 217, 217, 0.3);
+    background: rgba(217, 217, 217, 0.1);
     backdrop-filter: blur(40px);
     padding: rem(10) rem(23) rem(8) rem(12);
     gap: rem(13);
@@ -377,6 +397,9 @@ body::after {
     @media (max-width: $tablet) {
       background: transparent;
       backdrop-filter: blur(0px);
+    }
+    img {
+      transform: translateY(-2px);
     }
     &:hover {
       background: rgba(217, 217, 217, 0.3);
@@ -396,14 +419,18 @@ body::after {
     @media (max-width: $tablet) {
       padding: 7px;
     }
+    img {
+      transform: translateY(-2px);
+    }
     &:hover {
       text-decoration: underline;
     }
   }
   &__image-ibg {
-    border-radius: 30px;
-    overflow: hidden;
     padding-bottom: 56.66897%; /* 820/1447 */
+    @media (max-width: em(1800)) {
+      padding-bottom: 50%;
+    }
     img {
       object-fit: contain !important;
     }
@@ -414,6 +441,8 @@ body::after {
       padding-bottom: 57.227139%; /* 194/339 */
     }
     img {
+      border-radius: 30px;
+      overflow: hidden;
       max-width: 100%;
     }
   }
@@ -464,7 +493,11 @@ body::after {
   border-radius: 30px;
   padding: rem(48) rem(62) rem(32);
   .dark-theme & {
-    background: rgba(217, 217, 217, 0.1);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(255, 255, 255, 0) 106.24%
+    );
   }
   @media (max-width: $pc) {
     padding: rem(30);

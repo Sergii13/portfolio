@@ -482,14 +482,14 @@ onMounted(() => {})
   }
   // .menu__item
   &__item {
-    background: rgba(228, 228, 228, 0.5);
+    background: rgba(228, 228, 228, 0.2);
     background-blend-mode: soft-light;
     backdrop-filter: blur(12.5px);
     min-height: rem(60);
     display: flex;
     align-items: center;
     .dark-theme & {
-      background: rgba(228, 228, 228, 0.03);
+      background: rgba(0, 0, 0, 0.3);
     }
   }
   // .menu__link

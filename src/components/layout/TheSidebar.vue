@@ -41,23 +41,67 @@
     <div class="sidebar__line"></div>
     <ul class="sidebar__list">
       <li class="sidebar__item">
-        <a href="" class="sidebar__link">
-          <img :src="ContactIcon" alt="" />
+        <a href="" class="sidebar__link sidebar__link_bottom">
+          <svg
+            width="20"
+            height="17"
+            viewBox="0 0 20 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.1931 1.46916L16.2884 15.1676C16.0691 16.1342 15.4978 16.3748 14.6859 15.9197L10.2597 12.6582L8.12435 14.7125C7.88785 14.949 7.69054 15.1463 7.23473 15.1463L7.55304 10.639L15.7556 3.2271C16.1124 2.90947 15.6779 2.73279 15.2015 3.0511L5.06085 9.4366L0.695226 8.06985C-0.254212 7.77354 -0.271399 7.12041 0.893226 6.6646L17.9687 0.0859113C18.7593 -0.210401 19.4509 0.261224 19.1931 1.46916Z"
+              fill="#848381"
+            />
+          </svg>
         </a>
       </li>
       <li class="sidebar__item">
-        <a href="" class="sidebar__link">
-          <img :src="ContactIcon" alt="" />
+        <a href="" class="sidebar__link sidebar__link_bottom">
+          <svg
+            width="20"
+            height="17"
+            viewBox="0 0 20 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.1931 1.46916L16.2884 15.1676C16.0691 16.1342 15.4978 16.3748 14.6859 15.9197L10.2597 12.6582L8.12435 14.7125C7.88785 14.949 7.69054 15.1463 7.23473 15.1463L7.55304 10.639L15.7556 3.2271C16.1124 2.90947 15.6779 2.73279 15.2015 3.0511L5.06085 9.4366L0.695226 8.06985C-0.254212 7.77354 -0.271399 7.12041 0.893226 6.6646L17.9687 0.0859113C18.7593 -0.210401 19.4509 0.261224 19.1931 1.46916Z"
+              fill="#848381"
+            />
+          </svg>
         </a>
       </li>
       <li class="sidebar__item">
-        <a href="" class="sidebar__link">
-          <img :src="ContactIcon" alt="" />
+        <a href="" class="sidebar__link sidebar__link_bottom">
+          <svg
+            width="20"
+            height="17"
+            viewBox="0 0 20 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.1931 1.46916L16.2884 15.1676C16.0691 16.1342 15.4978 16.3748 14.6859 15.9197L10.2597 12.6582L8.12435 14.7125C7.88785 14.949 7.69054 15.1463 7.23473 15.1463L7.55304 10.639L15.7556 3.2271C16.1124 2.90947 15.6779 2.73279 15.2015 3.0511L5.06085 9.4366L0.695226 8.06985C-0.254212 7.77354 -0.271399 7.12041 0.893226 6.6646L17.9687 0.0859113C18.7593 -0.210401 19.4509 0.261224 19.1931 1.46916Z"
+              fill="#848381"
+            />
+          </svg>
         </a>
       </li>
       <li class="sidebar__item">
-        <a href="" class="sidebar__link">
-          <img :src="ContactIcon" alt="" />
+        <a href="" class="sidebar__link sidebar__link_bottom">
+          <svg
+            width="20"
+            height="17"
+            viewBox="0 0 20 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.1931 1.46916L16.2884 15.1676C16.0691 16.1342 15.4978 16.3748 14.6859 15.9197L10.2597 12.6582L8.12435 14.7125C7.88785 14.949 7.69054 15.1463 7.23473 15.1463L7.55304 10.639L15.7556 3.2271C16.1124 2.90947 15.6779 2.73279 15.2015 3.0511L5.06085 9.4366L0.695226 8.06985C-0.254212 7.77354 -0.271399 7.12041 0.893226 6.6646L17.9687 0.0859113C18.7593 -0.210401 19.4509 0.261224 19.1931 1.46916Z"
+              fill="#848381"
+            />
+          </svg>
         </a>
       </li>
     </ul>
@@ -129,11 +173,7 @@ const route = useRoute()
       svg {
         transform: translateY(-3px);
       }
-      img {
-        transform: translateY(-3px);
-      }
     }
-
     svg {
       width: 20px;
       height: 20px;
@@ -141,6 +181,22 @@ const route = useRoute()
       @media (max-width: em(1600)) {
         width: 15px;
         height: 15px;
+      }
+    }
+
+    &_bottom {
+      svg {
+        width: 20px;
+        height: 20px;
+        transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+        fill: #848381;
+        .dark-theme & {
+          fill: #7b8088;
+        }
+        @media (max-width: em(1600)) {
+          width: 15px;
+          height: 15px;
+        }
       }
     }
     img {
@@ -161,7 +217,7 @@ const route = useRoute()
       height: 0;
       top: 0;
       z-index: 2;
-      width: 2px;
+      width: 1px;
       background: linear-gradient(263.18deg, #005bbb 16.86%, #6db4ff 104.2%);
     }
     &.active {
