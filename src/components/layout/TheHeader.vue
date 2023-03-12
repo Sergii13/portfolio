@@ -482,7 +482,7 @@ onMounted(() => {})
   }
   // .menu__item
   &__item {
-    background: rgba(228, 228, 228, 0.2);
+    background: rgba(228, 228, 228, 0.5);
     background-blend-mode: soft-light;
     backdrop-filter: blur(12.5px);
     min-height: rem(60);
