@@ -21,7 +21,7 @@
                 prevEl: '.arrow.prev',
               }"
               :slides-per-view="'auto'"
-              :speed="800"
+              :speed="1200"
               :centered-slides="true"
               :loop="true"
               :breakpoints="breakpointsSwiper"
@@ -62,6 +62,7 @@
           <span>@denielsonis</span>
         </h2>
       </div>
+
       <div class="main-block__content">
         <div class="main-block__title">Hey, I am {{ data.name }}</div>
         <div class="main-block__avatar-block">
@@ -109,7 +110,7 @@
   </section>
 </template>
 <script setup>
-import {onMounted, ref, computed, onUnmounted} from 'vue'
+import {onMounted, ref, computed, onUnmounted, watch} from 'vue'
 import {EffectCoverflow, Navigation} from 'swiper'
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import {useMainPage} from '@/stores/mainPage'
@@ -117,7 +118,7 @@ import {useModal} from '@/stores/modal'
 import {storeToRefs} from 'pinia'
 import SpinnerApp from '@/components/SpinnerApp.vue'
 import ModalHome from '@/views/ModalHome.vue'
-
+import {useTheme} from '@/composables/useTheme.js'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 
@@ -154,6 +155,7 @@ const {data, isLoading} = storeToRefs(storeMain)
 
 onMounted(() => {
   storeMain.getMain()
+  resetColor()
 })
 
 const mainSwiper = ref(null)
@@ -161,7 +163,6 @@ const realIndex = ref(null)
 const onSwiper = (swiper) => {
   mainSwiper.value = swiper
   realIndex.value = mainSwiper.value.realIndex
-  setColorWithData()
 }
 const changeSwiperIndex = () => {
   if (mainSwiper.value) {
@@ -174,15 +175,36 @@ const dataToPopup = computed(() => {
     return data.value.projects[realIndex.value]
   }
 })
-const setColorWithData = () => {
-  if (dataToPopup.value) {
+const {currentTheme} = useTheme()
+const resetColor = () => {
+  setTimeout(() => {
     const root = document.documentElement
+    root.style.removeProperty('--colorSwiper')
+    root.style.removeProperty('--iconColor')
+    document.documentElement.classList.remove('color')
+  }, 1000)
+}
+const setColorWithData = () => {
+  if (dataToPopup.value && currentTheme.value == 'dark-theme') {
+    const root = document.documentElement
+    document.documentElement.classList.add('animate')
+    document.documentElement.classList.add('color')
     root.style.setProperty('--colorSwiper', `${dataToPopup.value.color}`)
+    root.style.setProperty('--iconColor', `${dataToPopup.value.iconColor}`)
+    setTimeout(() => {
+      document.documentElement.classList.remove('animate')
+    }, 1000)
+  } else {
+    resetColor()
   }
 }
+watch(currentTheme, (newValue, oldValue) => {
+  if (oldValue === 'dark-theme') {
+    resetColor()
+  }
+})
 onUnmounted(() => {
-  const root = document.documentElement
-  root.style.removeProperty('--colorSwiper')
+  resetColor()
 })
 </script>
 <style lang="scss" scoped>
@@ -210,7 +232,7 @@ onUnmounted(() => {
 
   // .main-block__left
   &__left {
-    gap: rem(30);
+    gap: rem(110);
     width: 50%;
     min-width: 0;
     display: flex;
@@ -250,7 +272,7 @@ onUnmounted(() => {
   // .main-block__arrows
   &__arrows {
     position: absolute;
-    width: 90%;
+    width: calc(90% + 30px);
     display: flex;
     z-index: 10;
     justify-content: space-between;
@@ -268,8 +290,8 @@ onUnmounted(() => {
     }
 
     .arrow {
-      background: #e4e4e4;
-      background-blend-mode: soft-light;
+      background-color: #e4e4e4;
+      mix-blend-mode: soft-light;
       backdrop-filter: blur(5px);
       width: 30px;
       pointer-events: all;
@@ -279,7 +301,9 @@ onUnmounted(() => {
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-
+      .dark-theme & {
+        background: rgba(255, 255, 255, 0.12);
+      }
       @media (any-hover: hover) {
         &:hover {
           box-shadow: 0 0 15px var(--main-color);
@@ -324,7 +348,7 @@ onUnmounted(() => {
     &.swiper-slide-prev,
     &.swiper-slide-next {
       visibility: visible;
-      opacity: 0.75;
+      opacity: 0.45;
     }
 
     &.swiper-slide-active {
@@ -409,29 +433,32 @@ onUnmounted(() => {
     }
 
     span {
+      --bg-size: 100%;
       display: block;
       font-weight: 600;
-      background: linear-gradient(
-        263.18deg,
-        rgba(0, 0, 0, 0.5) 46.86%,
-        var(--colorSwiper) 84.2%
-      );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       @include adaptiveValue('font-size', 96, 50, 0, 1920, 768);
       line-height: 104.166667%;
-      /* 100/96 */
+      background: var(
+        --colorSwiper,
+        linear-gradient(263.18deg, #005bbb 16.86%, #6db4ff 104.2%)
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      transition: all 0.8s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      .animate & {
+        opacity: 0.6;
+        animation: gradient-text-animation 1s linear;
+      }
+      // animation: move-bg 0.3s ease-in-out infinite;
     }
+    /* 100/96 */
   }
 
   // .main-block__content
   &__content {
     width: 51.823529%;
-    /* 881/1700 */
-    background: #cad3f3;
     overflow: hidden;
-    background-blend-mode: soft-light;
     backdrop-filter: blur(12.5px);
     border-radius: 60px;
     padding: 40px 40px 55px;
@@ -454,7 +481,6 @@ onUnmounted(() => {
     .dark-theme & {
       background: transparent;
     }
-
     &::after {
       content: '';
       position: absolute;
@@ -463,30 +489,29 @@ onUnmounted(() => {
       border-radius: 60px;
       width: 100%;
       z-index: -1;
-      opacity: 0.2;
       height: 100%;
-      background: #cad3f3;
-      background: linear-gradient(
-        263.18deg,
-        rgba(0, 0, 0, 0.5) 26.86%,
-        var(--colorSwiper) 104.2%
-      );
+      transition: all 1s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      background: #eef3ff;
+      background-position: 0 0;
+      backdrop-filter: blur(12.5px);
+      opacity: 0.82;
+      .dark-theme & {
+        background: linear-gradient(180.15deg, #c4c4c4 0.13%, #6db4ff 99.87%);
+        opacity: 0.02;
+      }
+
+      /* 
+  .animate & {
+        width: 200%;
+        transform: translateX(-40%);
+        background: 0 -2000px linear-gradient(263.18deg, rgba(0, 0, 0, 0.5)
+              26.86%, var(--colorSwiper) 104.2%);
+      }
+*/
+
       @media (max-width: $tablet) {
         background: none;
         border-radius: 0px;
-      }
-
-      .dark-theme & {
-        background: rgba(255, 255, 255, 0.43);
-        background: linear-gradient(
-          263.18deg,
-          rgba(255, 255, 255, 0.03) 46.86%,
-          var(--colorSwiper) 104.2%
-        );
-        @media (max-width: $tablet) {
-          background: none;
-          border-radius: 0px;
-        }
       }
     }
   }
@@ -699,6 +724,37 @@ onUnmounted(() => {
     &:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
+  }
+}
+@keyframes move-bg {
+  to {
+    background-position: 400% 0;
+  }
+}
+@keyframes second_heading_gradient {
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  66.667%,
+  83.333% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes gradient-text-animation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 </style>

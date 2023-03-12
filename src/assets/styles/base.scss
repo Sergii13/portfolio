@@ -48,6 +48,7 @@ body {
   overflow-y: auto;
   margin: 0 auto;
   padding: 0 30px;
+
   @media (max-width: em(1600)) {
     padding: rem(20) rem(15) 0;
   }
@@ -56,8 +57,11 @@ body {
   }
   &__content {
     flex: 1 1 auto;
-    display: flex;
     flex-direction: column;
+    display: flex;
+    &.not-100 {
+      display: block;
+    }
   }
 }
 picture {
@@ -80,9 +84,9 @@ picture {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: rem(35);
+  padding-top: rem(74);
   @media (max-width: em(1600)) {
-    padding-top: rem(15);
+    padding-top: rem(30);
   }
   @media (max-width: $tablet) {
     padding: rem(25) rem(15) 0;
@@ -194,6 +198,14 @@ html {
 .wrapper {
   background: #dbe2ff;
   position: relative;
+  .animate & {
+    &::before {
+      animation: move-bg 1s linear;
+    }
+  }
+  &::before {
+    background: linear-gradient(0, 0, 0, 0);
+  }
   &::after {
     content: '';
     position: absolute;
@@ -201,16 +213,43 @@ html {
     height: 100%;
     top: 0;
     left: 0;
-    background: url('@/assets/images/main-img/bg2.png') 0 0 / cover no-repeat;
+    background-image: url('@/assets/images/bg02.jpg') 0 0 / cover no-repeat;
   }
-  &::before {
-    content: '';
-    position: absolute;
+  &.home-page {
+  }
+}
+@keyframes move-bg {
+  0% {
+    background-position: 0 0;
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: url('@/assets/images/main-img/bg2.png') 0 0 / cover no-repeat;
+  }
+  50% {
+    background-position: 0 -2000px;
+    width: 250%;
+  }
+  100% {
+    background-position: 0 0px;
+    width: 100%;
+  }
+}
+.color {
+  .dark-theme .wrapper {
+    &::before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      mix-blend-mode: hard-light;
+      top: 0;
+      left: 0;
+      opacity: 0.4;
+      position: absolute;
+      background: linear-gradient(
+        255.74deg,
+        var(--iconColor) -7.36%,
+        #0d1215 106.14%
+      );
+    }
   }
 }
 .wrapper__row {
@@ -223,9 +262,9 @@ html {
 body {
   &.dark-theme {
     .wrapper {
-      background: #141414;
-      &::before {
-        display: none;
+      &::after {
+        background-blend-mode: soft-light;
+        background-image: url('@/assets/images/bg.jpg');
       }
     }
   }

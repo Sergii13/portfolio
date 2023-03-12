@@ -122,7 +122,6 @@
 
 <script setup>
 import ModalApp from '@/components/ModalApp.vue'
-import {useTheme} from '@/composables/useTheme.js'
 
 const props = defineProps({
   textMessage: {
@@ -130,7 +129,7 @@ const props = defineProps({
     required: false,
   },
 })
-const {currentTheme} = useTheme()
+
 </script>
 
 <style lang="scss" scoped></style>

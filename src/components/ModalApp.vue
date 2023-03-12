@@ -106,8 +106,8 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  mix-blend-mode: soft-light;
-  filter: blur(50px);
+  filter: blur(40px);
+  background-size: 100%;
   border-radius: 30px;
   z-index: 150;
   opacity: 0;
@@ -404,6 +404,9 @@ body::after {
     border-radius: 30px;
     overflow: hidden;
     padding-bottom: 56.66897%; /* 820/1447 */
+    img {
+      object-fit: contain !important;
+    }
     @media (max-width: em(1600)) {
       padding-bottom: 40%;
     }

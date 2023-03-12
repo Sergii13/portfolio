@@ -19,6 +19,8 @@ const isDarkTheme = document.body.classList.contains('dark-theme')
 .footer {
   padding: 30px 0;
   overflow: hidden;
+  position: relative;
+  z-index: 2;
   // .footer__row
   &__row {
     display: flex;

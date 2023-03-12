@@ -38,12 +38,12 @@ const primaryColor = ref(null)
 
 onMounted(() => {
   const styles = getComputedStyle(document.documentElement)
-  primaryColor.value = styles.getPropertyValue('--colorSwiper')
+  primaryColor.value = styles.getPropertyValue('--iconColor')
 })
 </script>
 <style lang="scss" scoped>
 svg {
-  fill: var(--colorSwiper, url(#gradient));
+  fill: var(--iconColor, url(#gradient));
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
 }
 </style>

@@ -162,10 +162,7 @@ const route = useRoute()
       top: 0;
       z-index: 2;
       width: 2px;
-      background: var(
-        --colorSwiper,
-        linear-gradient(263.18deg, #005bbb 16.86%, #6db4ff 104.2%)
-      );
+      background: linear-gradient(263.18deg, #005bbb 16.86%, #6db4ff 104.2%);
     }
     &.active {
       border-left: none;
